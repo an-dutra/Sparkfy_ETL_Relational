@@ -1,6 +1,6 @@
 # DROP TABLES
 
-songplay_table_drop = ""
+songplay_table_drop = "DROP TABLE IF EXISTS fact_songplays"
 user_table_drop = ""
 song_table_drop = ""
 artist_table_drop = ""
@@ -9,6 +9,16 @@ time_table_drop = ""
 # CREATE TABLES
 
 songplay_table_create = ("""
+CREATE TABLE IF NOT EXISTS fact_songplays 
+(   songplay_id BIGINT PRIMARY KEY, 
+    start_time BIGINT NOT NULL, 
+    user_id BIGINT NOT NULL, 
+    level VARCHAR, 
+    song_id VARCHAR NOT NULL,
+    artist_id VARCHAR NOT NULL, 
+    session_id INT, 
+    location VARCHAR, 
+    user_agent VARCHAR)
 """)
 
 user_table_create = ("""
