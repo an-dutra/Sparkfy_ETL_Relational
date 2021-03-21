@@ -41,11 +41,11 @@ CREATE TABLE IF NOT EXISTS songs
 
 artist_table_create = ("""
 CREATE TABLE IF NOT EXISTS artists
-(artist_id TEXT PRIMARY KEY, 
+( artist_id TEXT PRIMARY KEY, 
     name Text, 
     location text , 
-    latitude float(5),
-    longitude float(5));
+    latitude numeric,
+    longitude numeric);
 """)
 
 time_table_create = ("""
@@ -67,7 +67,7 @@ INSERT INTO songplays VALUES (DEFAULT, %s, %s, %s, %s, %s, %s, %s, %s)
 """)
 
 user_table_insert = ("""
-INSERT INTO users VALUES (%s, %s, %s, %s, %s)
+INSERT INTO users (user_id, first_name, last_name, gender, level) VALUES (%s, %s, %s, %s, %s)
 """)
 
 song_table_insert = ("""
@@ -75,7 +75,7 @@ INSERT INTO songs (song_id, title, artist_id, year, duration) VALUES (%s, %s, %s
 """)
 
 artist_table_insert = ("""
-INSERT INTO songs VALUES (%s, %s, %s, %s, %s)
+INSERT INTO artists (artist_id, name, location, latitude, longitude) VALUES (%s, %s, %s, %s, %s)
 """)
 
 
