@@ -12,10 +12,10 @@ songplay_table_create = ("""
 CREATE TABLE IF NOT EXISTS songplays
 (songplay_id BIGINT PRIMARY KEY, 
     start_time BIGINT NOT NULL, 
-    user_id BIGINT NOT NULL, 
+    user_id BIGINT REFERENCES users (user_id), 
     level TEXT, 
-    song_id TEXT NOT NULL,
-    artist_id TEXT NOT NULL, 
+    song_id TEXT REFERENCES songs (song_id),
+    artist_id TEXT REFERENCES artists (artist_id), 
     session_id INT, 
     location TEXT, 
     user_agent TEXT);
@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS songplays
 
 user_table_create = ("""
 CREATE TABLE IF NOT EXISTS users 
-(user_id BIGINT PRIMARY KEY, 
+(user_id BIGINT CONSTRAINT user_tb PRIMARY KEY, 
     first_name Text, 
     last_name Text, 
     gender CHAR(1),
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS users
 
 song_table_create = ("""
 CREATE TABLE IF NOT EXISTS songs
-(song_id TEXT PRIMARY KEY, 
+(song_id TEXT CONSTRAINT song_tb PRIMARY KEY, 
     title Text, 
     artist_id text , 
     year smallint,
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS songs
 
 artist_table_create = ("""
 CREATE TABLE IF NOT EXISTS artists
-(artist_id TEXT PRIMARY KEY, 
+(artist_id TEXT CONSTRAINT artist_tb PRIMARY KEY, 
     name Text, 
     location text , 
     latitude float(5),
@@ -63,19 +63,24 @@ CREATE TABLE IF NOT EXISTS time
 # INSERT RECORDS
 
 songplay_table_insert = ("""
+INSERT INTO songplays VALUES (DEFAULT, %s, %s, %s, %s, %s, %s, %s, %s)
 """)
 
 user_table_insert = ("""
+INSERT INTO users VALUES (%s, %s, %s, %s, %s)
 """)
 
 song_table_insert = ("""
+INSERT INTO songs VALUES (%s, %s, %s, %s, %s)
 """)
 
 artist_table_insert = ("""
+INSERT INTO songs VALUES (%s, %s, %s, %s, %s)
 """)
 
 
 time_table_insert = ("""
+INSERT INTO songs VALUES (%s, %s, %s, %s, %s, %s, %s)
 """)
 
 # FIND SONGS
