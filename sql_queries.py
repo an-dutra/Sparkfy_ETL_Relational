@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS artists
 
 time_table_create = ("""
 CREATE TABLE IF NOT EXISTS time
-(start_time BIGINT PRIMARY KEY, 
+(start_time timestamp PRIMARY KEY, 
     hour smallint, 
     day smallint, 
     week smallint,
@@ -80,7 +80,7 @@ INSERT INTO artists (artist_id, name, location, latitude, longitude) VALUES (%s,
 
 
 time_table_insert = ("""
-INSERT INTO songs VALUES (%s, %s, %s, %s, %s, %s, %s)
+INSERT INTO time VALUES (%s, %s, %s, %s, %s, %s, %s)
 """)
 
 # FIND SONGS
