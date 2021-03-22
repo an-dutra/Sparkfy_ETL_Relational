@@ -6,6 +6,10 @@ from sql_queries import *
 
 
 def process_song_file(cur, filepath):
+    """
+    Read data from filepath (songs files) 
+    extracts song and artist info and load it into songs and artists tables
+    """
     # open song file
     df = pd.read_json(filepath, lines=True)
 
@@ -19,6 +23,13 @@ def process_song_file(cur, filepath):
 
 
 def process_log_file(cur, filepath):
+    """
+    Extracts data from filepath (log files) based on data extracted
+    creates a dataframe with time data and loads time dimension
+    also extract user data from files, and save it to user dimension
+    get data from songs and artists tables joins data with current dataframe 
+    and loads to songplay fact table.
+    """
     # open log file
     df = pd.read_json(filepath, lines=True)
 
@@ -64,6 +75,10 @@ def process_log_file(cur, filepath):
 
 
 def process_data(cur, conn, filepath, func):
+    """
+    Given a filepath and a function to process it
+    iterate over all files in directory (filepath) and process.
+    """
     # get all files matching extension from directory
     all_files = []
     for root, dirs, files in os.walk(filepath):
@@ -83,6 +98,9 @@ def process_data(cur, conn, filepath, func):
 
 
 def main():
+    """
+    Connect to sparkkfydb and process song_data and log_data files to load tables in star schema
+    """
     conn = psycopg2.connect("host=127.0.0.1 dbname=sparkifydb user=student password=student")
     cur = conn.cursor()
 
