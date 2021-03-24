@@ -12,7 +12,7 @@ songplay_table_create = ("""
 CREATE TABLE IF NOT EXISTS songplays
 (songplay_id SERIAL PRIMARY KEY, 
     start_time BIGINT NOT NULL, 
-    user_id BIGINT, 
+    user_id BIGINT REFERENCES users (user_id), 
     level TEXT, 
     song_id TEXT,
     artist_id TEXT, 
@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS songplays
 
 user_table_create = ("""
 CREATE TABLE IF NOT EXISTS users 
-(user_id BIGINT PRIMARY KEY, 
+(user_id BIGINT PRIMARY KEY NOT NULL, 
     first_name Text, 
     last_name Text, 
     gender CHAR(1),
@@ -60,6 +60,8 @@ CREATE TABLE IF NOT EXISTS time
     );
 """)
 
+
+
 # INSERT RECORDS
 
 songplay_table_insert = ("""
@@ -67,7 +69,7 @@ INSERT INTO songplays VALUES (DEFAULT, %s, %s, %s, %s, %s, %s, %s, %s)
 """)
 
 user_table_insert = ("""
-INSERT INTO users (user_id, first_name, last_name, gender, level) VALUES (%s, %s, %s, %s, %s) ON CONFLICT DO NOTHING
+INSERT INTO users (user_id, first_name, last_name, gender, level) VALUES (%s, %s, %s, %s, %s) ON CONFLICT (user_id) DO UPDATE SET first_name = EXCLUDED.first_name, last_name = EXCLUDED.last_name, gender = EXCLUDED.gender, level = EXCLUDED.level
 """)
 
 song_table_insert = ("""
@@ -97,5 +99,5 @@ SELECT s.song_id, a.artist_id
 
 # QUERY LISTS
 
-create_table_queries = [songplay_table_create, user_table_create, song_table_create, artist_table_create, time_table_create]
+create_table_queries = [user_table_create, song_table_create, artist_table_create, time_table_create, songplay_table_create]
 drop_table_queries = [songplay_table_drop, user_table_drop, song_table_drop, artist_table_drop, time_table_drop]
